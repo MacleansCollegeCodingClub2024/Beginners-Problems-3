@@ -1,0 +1,16 @@
+# Number Problem
+
+def seen_before(numbers):
+    seen = set()
+    results = []
+    for num in numbers:
+        if num in seen:
+            results.append("YES")
+        else:
+            results.append("NO")
+            seen.add(num)
+    return results
+
+# Example usage
+numbers = [1, 3, 8, 35, 4, 2, 3]
+print("#".join(seen_before(numbers)))
