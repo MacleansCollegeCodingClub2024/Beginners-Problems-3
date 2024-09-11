@@ -1,0 +1,35 @@
+import random
+
+def get_feedback(guess, word):
+    feedback = ""
+    for i, letter in enumerate(guess):
+        if letter == word[i]:
+            feedback += "🟩"
+        elif letter in word:
+            feedback += "🟨"
+        else:
+            feedback += "⬛️"
+    return feedback
+
+def play_game():
+    word = "light"
+    print("Welcome to Wordle! You have 6 chances to guess a 5-letter word.")
+    
+    for attempt in range(6):
+        guess = input(f"Attempt {attempt + 1}/6: ").lower()
+        
+        if len(guess) != 5 or not guess.isalpha():
+            print("Invalid guess. Please enter a 5-letter word with letters only.")
+            continue
+        
+        feedback = get_feedback(guess, word)
+        print(feedback)
+        
+        if guess == word:
+            print(f"Congratulations! You guessed '{word}' correctly.")
+            return
+    
+    print(f"Unfortunate! The word was '{word}'.")
+
+if __name__ == "__main__":
+    play_game()
