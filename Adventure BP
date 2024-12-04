@@ -1,0 +1,73 @@
+import random
+
+def choose_scenario():
+    return random.randint(1, 2)
+
+def forest_treasure_hunt():
+    fruits = {"banana", "apple", "strawberry", "blueberry", "orange"}
+    guessed = set()
+    while len(guessed) < 5:
+        guess = input("Guess a fruit: ").lower()
+        if guess in fruits:
+            guessed.add(guess)
+    print("You passed the monkey!")
+
+def cross_river():
+    height = int(input("Enter height in cm: "))
+    if height <= 160:
+        print("You drown.")
+        return False
+    if height <= 180:
+        print("You cross safely.")
+        return True
+    print("The tiger spots you.")
+    return False
+
+def unlock_door():
+    password = [random.randint(0, 9) for _ in range(4)]
+    for _ in range(10):
+        guess = [int(digit) for digit in input("4-digit guess: ")]
+        if guess == password:
+            print("Door unlocked!")
+            return True
+        correct = sum(a == b for a, b in zip(guess, password))
+        print(f"Correct digits: {correct}")
+    print("Failed to unlock.")
+    return False
+
+def python_quiz():
+    questions = [
+        ("2 + 3 =", ["4", "5", "6", "7"], "5"),
+        ("Python data type?", ["String", "Integer", "List", "All of the above"], "All of the above"),
+        ("Start a comment?", ["//", "#", "/*", "--"], "#"),
+        ("Define function?", ["define", "function", "def", "func"], "def"),
+        ("Block of code?", ["Indentation", "Braces", "Parentheses", "Quotes"], "Indentation"),
+        ("Invalid variable?", ["var_name", "1var_name", "_varName", "varName1"], "1var_name")
+    ]
+
+    correct = sum(
+        input(f"{q[0]} {', '.join(q[1])}: ") == q[2]
+        for q in questions
+    )
+    print(f"Score: {correct}/6")
+
+def main():
+    scenario = choose_scenario()
+    if scenario == 1:
+        forest_treasure_hunt()
+        if not cross_river(): return
+        unlock_door()
+    else:
+        python_quiz()
+
+    if input("Try the other game? (yes/no): ").strip().lower() == "yes":
+        if scenario == 1:
+            python_quiz()
+        else:
+            forest_treasure_hunt()
+            if cross_river():
+                unlock_door()
+    print("Goodbye!")
+
+if __name__ == "__main__":
+    main()
